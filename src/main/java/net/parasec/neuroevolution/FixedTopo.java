@@ -1,6 +1,7 @@
 package net.parasec.neuroevolution;
 
 import net.parasec.neuroevolution.genetic.Individual;
+import net.parasec.neuroevolution.genetic.OptDir;
 import net.parasec.neuroevolution.network.Network;
 import net.parasec.neuroevolution.network.Edge;
 
@@ -13,14 +14,14 @@ public final class FixedTopo extends Individual {
   private final ArrayList<Edge> edges;
 
 
-  public FixedTopo(final Network net, final double fitness) {
-    super(fitness);
+  public FixedTopo(final Network net, final OptDir optDir) {
+    super(optDir);
     this.net = net;
     this.edges = net.getAllEdges();
   }
 
   public FixedTopo(final FixedTopo ft) {
-    super(ft.getFitness());
+    super(ft.getFitness(), ft.getOptDir());
     net = new Network(ft.getNet());
     edges = net.getAllEdges();        
   }

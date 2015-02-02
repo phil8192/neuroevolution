@@ -66,20 +66,19 @@ public final class FixedTopoSimpleESXORTest {
 
     Network net = new Network(bias, in, hidden, new TransferNode[]{out});
 
+    // this is an error minimisation problem.
+    OptDir optDir = new Minimisation();
 
     // wrap the network up as an individual
     // for maximisation problem, set initial fitness to
     // -Double.MAX_VALUE
-    FixedTopo idv = new FixedTopo(net, Double.MAX_VALUE);
+    FixedTopo idv = new FixedTopo(net, optDir);
     
     // custom evaluator
     IndividualEvaluator<FixedTopo> eva = new FixedTopoSupervised(instances); 
 
     // custom mutator 
     FixedTopoMutator mut = new FixedTopoMutator(prng);    
-
-    // this is an error minimisation problem.
-    OptDir optDir = new Minimisation(); 
 
     // optimise the network using the (1+1)-ES strategy for a maximum of maxit 
     // iterations.

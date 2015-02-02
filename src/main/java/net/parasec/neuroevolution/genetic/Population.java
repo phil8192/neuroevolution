@@ -10,20 +10,16 @@ public final class Population<T extends Individual> {
 
   private final static Logger LOG = Logger.getLogger(Population.class);
 
-  private ArrayList<T> pop; 
+  private ArrayList<T>                 pop; 
   private final PopulationEvaluator<T> e; 
-  private final Procreator<T> p;
+  private final Procreator<T>          p;
 
-  private final Comparator<T> comp;
-  
  
-  public Population(final ArrayList<T> pop, final PopulationEvaluator<T> e,
-      final Procreator<T> p, final OptDir optDir) {
+  public Population(final ArrayList<T> pop, final PopulationEvaluator<T> e, 
+      final Procreator<T> p) {
     this.pop = pop;
-    this.e = e;
-    this.p = p;
-
-    comp = ? optDir.equals 
+    this.e   = e;
+    this.p   = p;
   }
 
   /**
@@ -34,7 +30,7 @@ public final class Population<T extends Individual> {
     //LOG.info("evaluating " + pop.size() + " individuals");
     final PopulationFitness pf = e.eval(pop);
 
-    Collections.sort(pop, comp);
+    Collections.sort(pop);
   
     //LOG.info("procreating");
     pop = p.procreate(pop, pf); 

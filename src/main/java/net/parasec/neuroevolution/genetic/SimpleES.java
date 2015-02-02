@@ -2,6 +2,9 @@ package net.parasec.neuroevolution.genetic;
 
 import net.parasec.neuroevolution.logging.Logger;
 
+import java.util.Comparator;
+
+
 /**
  * (1 + 1)-ES. 
  *
@@ -35,11 +38,11 @@ public final class SimpleES<T extends Individual> {
       m.mutate(idv);     
       ie.eval(idv);    
       final double fitness = idv.getFitness();
-      if(!optDir.improvement(fitness, best)) {
+      if(optDir.fitDiff(fitness, best) <= 0) {
         m.revert(idv);
         idv.setFitness(best);
       } else {
-        best = fitness;
+        best = idv.getFitness();
         LOG.info(String.format("%010d %.6f", i, best));
       }
     }

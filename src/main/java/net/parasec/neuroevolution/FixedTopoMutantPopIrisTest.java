@@ -21,6 +21,8 @@ import net.parasec.neuroevolution.genetic.Population;
 import net.parasec.neuroevolution.genetic.PopulationFitness;
 import net.parasec.neuroevolution.genetic.Evolution;
 import net.parasec.neuroevolution.genetic.RankSelector;
+import net.parasec.neuroevolution.genetic.OptDir;
+import net.parasec.neuroevolution.genetic.Minimisation;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public final class FixedTopoMutantPopIrisTest {
 
   // 4-6-3
   private static FixedTopo individual(final Random prng, final double minr,
-      final double maxr) {
+      final double maxr, final OptDir optDir) {
     Node bias = new Node("0", 1);
     Node[] in = new Node[] { new Node("1"), new Node("2"),
                              new Node("3"), new Node("4") };
@@ -115,7 +117,7 @@ public final class FixedTopoMutantPopIrisTest {
     Network net = new Network(bias, in, hidden, new TransferNode[] {
         out1, out2, out3
     });
-    return new FixedTopo(net, Double.MAX_VALUE);
+    return new FixedTopo(net, optDir);
   }
 
   
@@ -275,6 +277,8 @@ public final class FixedTopoMutantPopIrisTest {
 {{5.9,3.0,5.1,1.8},{0.1,0.1,0.9}}
 };
 
+    final OptDir optDir = new Minimisation();
+
     final double minr = -0.1, maxr = 0.1;
     final int maxit = 1000000;
     final int popSize = 100;
@@ -283,7 +287,7 @@ public final class FixedTopoMutantPopIrisTest {
     final Random prng = new Random();
     final ArrayList<FixedTopo> lst = new ArrayList<FixedTopo>(popSize);
     for(int i = 0; i < popSize; i++)
-      lst.add(individual(prng, minr, maxr));
+      lst.add(individual(prng, minr, maxr, optDir));
 
     final Selector<FixedTopo> s = new RankSelector<FixedTopo>(prng); 
     final Replicator<FixedTopo> r = new FixedTopoReplicator(); 

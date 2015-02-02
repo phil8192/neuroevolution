@@ -1,20 +1,19 @@
 package net.parasec.neuroevolution.genetic;
 
-import java.util.Comparator;
-
-
 /**
- * optimisation direciton:
- * for maximisation problem true if candidate &gt; comp
- * for minimisation problem true if candidate &lt; comp.
- * 
- * interface allows for thresholding etc.
- */ 
-public interface OptDir<T extends Individual> {
+ * always a maximisation problem...
+ * &gt; 0 if fitness1 is better than fitness2.
+ */
+public interface OptDir {
 
-  boolean improvement(double candidate, double comp);
+  enum Type {
+    MINIMISATION,
+    MAXIMISATION
+  }  
 
-  Comparator<T> getComparator();
+  double fitDiff(double fitness1, double fitness2);
   
+  Type getType();
+
 }
 
