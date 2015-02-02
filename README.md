@@ -1,3 +1,1 @@
-# README #
-
 neuroevolution
