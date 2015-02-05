@@ -1,6 +1,7 @@
 package net.parasec.neuroevolution.network;
 
 import net.parasec.neuroevolution.util.MathUtil;
+import net.parasec.neuroevolution.util.RandomUtil;
 
 import java.util.Random;
 import java.util.Arrays;
@@ -21,12 +22,12 @@ public final class NetworkBuilder {
     final int incoming = in.length;
     final Edge[] incomingEdges = new Edge[incoming+1];
     // bias
-    incomingEdges[0] = new Edge(bias, MathUtil.getRandom(prng, minr, maxr));
+    incomingEdges[0] = new Edge(bias, RandomUtil.getRandom(prng, minr, maxr));
 
     // incomming edges from all nodes in previous layer
     for(int i = 0; i < incoming; i++)
       incomingEdges[i+1] 
-          = new Edge(in[i], MathUtil.getRandom(prng, minr, maxr));
+          = new Edge(in[i], RandomUtil.getRandom(prng, minr, maxr));
 
     return incomingEdges;
   }

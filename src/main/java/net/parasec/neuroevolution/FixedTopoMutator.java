@@ -4,6 +4,7 @@ import net.parasec.neuroevolution.genetic.Mutator;
 import net.parasec.neuroevolution.genetic.Individual;
 
 import net.parasec.neuroevolution.util.MathUtil;
+import net.parasec.neuroevolution.util.RandomUtil;
 
 import net.parasec.neuroevolution.network.Edge;
 
@@ -30,7 +31,7 @@ public class FixedTopoMutator implements Mutator<FixedTopo> {
     lastIdx = randomIdx;
     lastValue = randomEdge.getWeight();
 
-    randomEdge.setWeight(MathUtil.getRandom(prng, lastValue-1, lastValue+1)); 
+    randomEdge.setWeight(RandomUtil.getRandom(prng, lastValue-1, lastValue+1)); 
     //randomEdge.setWeight(lastValue + prng.nextGaussian()); 
   }
 

@@ -70,10 +70,5 @@ public final class MathUtil {
     return 1-(thOutput*thOutput);
   }
 
-  public static double getRandom(final Random prng, final double min, 
-      final double max) {
-    return prng.nextDouble()*(max-min)+min;
-  }
-
 }
 
