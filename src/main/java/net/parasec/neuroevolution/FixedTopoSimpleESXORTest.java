@@ -9,6 +9,7 @@ import net.parasec.neuroevolution.network.TransferNode;
 import net.parasec.neuroevolution.network.Sigmoid;
 import net.parasec.neuroevolution.network.Edge;
 import net.parasec.neuroevolution.network.Node;
+import net.parasec.neuroevolution.network.NetworkBuilder;
 
 import net.parasec.neuroevolution.genetic.SimpleES;
 import net.parasec.neuroevolution.genetic.IndividualEvaluator;
@@ -44,27 +45,10 @@ public final class FixedTopoSimpleESXORTest {
     // nodes. each node has an incomming bias weight. weights are initialised
     // randomly within a [minr, maxr] interval.
     double minr = -0.1, maxr = 0.1;
-    Node bias = new Node("0", 1);
-    Node[] in = new Node[] { new Node("1"), new Node("2") };
-    ArrayList<TransferNode> hidden = new ArrayList<>();
-    hidden.add(new TransferNode("3", new Edge[] {
-       new Edge(bias,  MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[0], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[1], MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid()));
-    hidden.add(new TransferNode("4", new Edge[] {
-       new Edge(bias,  MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[0], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[1], MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid()));
-    TransferNode out =
-       new TransferNode("5", new Edge[] {
-       new Edge(bias,          MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(0), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(1), MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid());
 
-    Network net = new Network(bias, in, hidden, new TransferNode[]{out});
+    final Network net
+        = NetworkBuilder.buildFeedForward(new int[]{2,2,1}, minr, maxr, prng);
+    final TransferNode out = net.getOutputs()[0];
 
     // this is an error minimisation problem.
     OptDir optDir = new Minimisation();

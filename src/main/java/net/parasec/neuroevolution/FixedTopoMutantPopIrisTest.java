@@ -9,6 +9,7 @@ import net.parasec.neuroevolution.network.TransferNode;
 import net.parasec.neuroevolution.network.Sigmoid;
 import net.parasec.neuroevolution.network.Edge;
 import net.parasec.neuroevolution.network.Node;
+import net.parasec.neuroevolution.network.NetworkBuilder;
 
 import net.parasec.neuroevolution.genetic.Selector;
 import net.parasec.neuroevolution.genetic.Replicator;
@@ -37,89 +38,10 @@ public final class FixedTopoMutantPopIrisTest {
   // 4-6-3
   private static FixedTopo individual(final Random prng, final double minr,
       final double maxr, final OptDir optDir) {
-    Node bias = new Node("0", 1);
-    Node[] in = new Node[] { new Node("1"), new Node("2"),
-                             new Node("3"), new Node("4") };
-    ArrayList<TransferNode> hidden = new ArrayList<>();
-    hidden.add(new TransferNode("5", new Edge[] {
-       new Edge(bias,  MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[0], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[1], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[2], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[3], MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid()));
-    hidden.add(new TransferNode("6", new Edge[] {
-       new Edge(bias,  MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[0], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[1], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[2], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[3], MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid()));
-    hidden.add(new TransferNode("7", new Edge[] {
-       new Edge(bias,  MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[0], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[1], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[2], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[3], MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid()));
-    hidden.add(new TransferNode("8", new Edge[] {
-       new Edge(bias,  MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[0], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[1], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[2], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[3], MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid()));
-    hidden.add(new TransferNode("9", new Edge[] {
-       new Edge(bias,  MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[0], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[1], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[2], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[3], MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid()));
-    hidden.add(new TransferNode("10", new Edge[] {
-       new Edge(bias,  MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[0], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[1], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[2], MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(in[3], MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid()));
-  TransferNode out1 =
-       new TransferNode("11", new Edge[] {
-       new Edge(bias,          MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(0), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(1), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(2), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(3), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(4), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(5), MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid());
-    TransferNode out2 =
-       new TransferNode("12", new Edge[] {
-       new Edge(bias,          MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(0), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(1), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(2), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(3), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(4), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(5), MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid());
-    TransferNode out3 =
-       new TransferNode("13", new Edge[] {
-       new Edge(bias,          MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(0), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(1), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(2), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(3), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(4), MathUtil.getRandom(prng, minr, maxr)),
-       new Edge(hidden.get(5), MathUtil.getRandom(prng, minr, maxr))
-    }, new Sigmoid());
-
-    Network net = new Network(bias, in, hidden, new TransferNode[] {
-        out1, out2, out3
-    });
+    final Network net 
+        = NetworkBuilder.buildFeedForward(new int[]{4,6,3}, minr, maxr, prng);
     return new FixedTopo(net, optDir);
   }
-
   
   public static void main(String[] args) {
 
