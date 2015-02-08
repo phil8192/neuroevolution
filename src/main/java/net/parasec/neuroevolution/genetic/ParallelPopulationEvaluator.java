@@ -76,6 +76,7 @@ public final class ParallelPopulationEvaluator<T extends Individual>
       jobs.offer(shard);
      
     // collect and aggregate completed jobs
+    String minReport = null, maxReport = null;
     double min = Double.MAX_VALUE, max = -Double.MAX_VALUE, sum = 0;
     try {
 
@@ -86,8 +87,14 @@ public final class ParallelPopulationEvaluator<T extends Individual>
         final double fitMin = pf.getMin();
         final double fitMax = pf.getMax();
 
-        if(fitMin < min) min = fitMin;
-        if(fitMax > max) max = fitMax;
+        if(fitMin < min) {
+          min = fitMin;
+          minReport = pf.getMinReport();
+        }
+        if(fitMax > max) {
+          max = fitMax;
+          maxReport = pf.getMaxReport();
+        }
 
         sum += pf.getSum();
 
@@ -96,7 +103,8 @@ public final class ParallelPopulationEvaluator<T extends Individual>
       Thread.currentThread().interrupt();
     }
     
-    return new PopulationFitness(min, max, sum/pop.size(), sum);
+    return new PopulationFitness(min, max, sum/pop.size(), sum, 
+        minReport, maxReport);
   }
   
 }
